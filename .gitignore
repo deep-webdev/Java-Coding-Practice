@@ -41,3 +41,6 @@
 /QueueLinkedList$Queue.class
 /QueueStack.class
 /QueueStack$Queue.class
+/buildTrees$BinaryTree.class
+/buildTrees$Node.class
+/buildTrees.class
