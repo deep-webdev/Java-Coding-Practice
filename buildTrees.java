@@ -108,6 +108,58 @@ public class buildTrees {
         return leftSum + rightSum + root.data;
     }
 
+    public static int heightOfTree(Node root) {
+        if (root == null) {
+            return 0;
+        }
+        int leftHeight = heightOfTree(root.left);
+        int rightHeight = heightOfTree(root.right);
+        int height = Math.max(leftHeight, rightHeight) + 1;
+        return height;
+    }
+
+    public static int diameter(Node root) {
+        if (root == null) {
+            return 0;
+        }
+        int diam1 = diameter(root.left);
+        int diam2 = diameter(root.right);
+
+        int diam3 = heightOfTree(root.left) + heightOfTree(root.right) + 1;
+
+        return Math.max(diam3, Math.max(diam2, diam1));
+    }
+
+    static class TreeInfo {
+        int ht;
+        int diam;
+
+        TreeInfo(int ht, int diam) {
+            this.ht = ht;
+            this.diam = diam;
+        }
+    }
+
+    public static TreeInfo optimisedDiam(Node root) {
+        if (root == null) {
+            return new TreeInfo(0, 0);
+        }
+
+        TreeInfo left = optimisedDiam(root.left);
+        TreeInfo right = optimisedDiam(root.right);
+
+        int myHeight = Math.max(left.ht, right.ht) + 1;
+
+        int diam1 = left.diam;
+        int diam2 = right.diam;
+        int diam3 = left.ht + right.ht + 1;
+
+        int myDiam = Math.max(diam3, Math.max(diam1, diam2));
+
+        TreeInfo myInfo = new TreeInfo(myHeight, myDiam);
+        return myInfo;
+    }
+
     public static void main(String args[]) {
         int nodes[] = { 1, 2, 4, -1, -1, 5, -1, -1, 3, -1, 6, -1, -1 };
         BinaryTree tree = new BinaryTree();
@@ -122,7 +174,12 @@ public class buildTrees {
         // levelorder(root);
         // int totalNodes = countNodes(root);
         // System.out.println(totalNodes);
-        int totalSum = sumOfNodes(root);
-        System.out.println(totalSum);
+        // int totalSum = sumOfNodes(root);
+        // System.out.println(totalSum);
+        // int height = heightOfTree(root);
+        // System.out.println(height);
+        // int dia = diameter(root);
+        // System.out.println(dia);
+        System.out.println(optimisedDiam(root).diam);
     }
 }
