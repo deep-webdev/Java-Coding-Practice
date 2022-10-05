@@ -160,6 +160,42 @@ public class buildTrees {
         return myInfo;
     }
 
+    public static int sumOfKthNode(Node root, int k) {
+        if (root == null) {
+            return 0;
+        }
+        Queue<Node> q = new LinkedList<>();
+        q.add(root);
+        // q.add(null);
+
+        int level = 0;
+        int sum = 0;
+        int flag = 0;
+        while (!q.isEmpty()) {
+            int size = q.size();
+            while (size-- > 0) {
+                Node currNode = q.remove();
+                if (level == k) {
+                    flag = 1;
+                    sum += currNode.data;
+                } else {
+                    if (currNode.left != null) {
+                        q.add(currNode.left);
+                    }
+                    if (currNode.right != null) {
+                        q.add(currNode.right);
+                    }
+                }
+            }
+            level++;
+            if (flag == 1) {
+                break;
+            }
+        }
+        return sum;
+
+    }
+
     public static void main(String args[]) {
         int nodes[] = { 1, 2, 4, -1, -1, 5, -1, -1, 3, -1, 6, -1, -1 };
         BinaryTree tree = new BinaryTree();
@@ -180,6 +216,7 @@ public class buildTrees {
         // System.out.println(height);
         // int dia = diameter(root);
         // System.out.println(dia);
-        System.out.println(optimisedDiam(root).diam);
+        // System.out.println(optimisedDiam(root).diam);
+        System.out.println(sumOfKthNode(root, 2));
     }
 }
